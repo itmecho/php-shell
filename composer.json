@@ -1,0 +1,20 @@
+{
+    "name": "synapse/php-shell",
+    "description": "PHP wrapper for executing shell commands",
+    "authors": [
+        {
+            "name": "Iain Earl",
+            "email": "synapse791@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {},
+    "require-dev": {
+        "phpspec/phpspec": "^2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Neuron\\": "src/Neuron/"
+        }
+    }
+}
