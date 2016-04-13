@@ -1,0 +1,5 @@
+formatter.name: pretty
+suites:
+  service_suite:
+    namespace: Neuron
+    src_path: src
