@@ -2,6 +2,7 @@
 
 namespace spec\Neuron\Shell;
 
+use Neuron\Shell\Exceptions\CommandNotFoundException;
 use Neuron\Shell\Exceptions\DirectoryDoesNotExistException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -18,6 +19,12 @@ class CommandSpec extends ObjectBehavior
         $this->shouldHaveType('Neuron\Shell\Command');
         $this->getCmd()->shouldReturn('/bin/true');
         $this->getCmdString()->shouldReturn('/bin/true');
+    }
+
+    function it_throws_an_exception_when_a_command_is_not_found()
+    {
+        $this->beConstructedWith('/not_a_command');
+        $this->shouldThrow(new CommandNotFoundException('/not_a_command'))->duringInstantiation();
     }
 
     function it_can_set_a_working_directory_for_the_command()
@@ -81,6 +88,11 @@ class CommandSpec extends ObjectBehavior
         $this->addArgument('test');
         $this->addLongFlag('config', '/test/config.json');
         $this->getCmdString()->shouldReturn('/bin/true -v \'test\' --config \'/test/config.json\'');
+    }
+
+    function it_can_execute_a_command()
+    {
+        $this->execute()->shouldReturnAnInstanceOf('Neuron\Shell\Resources\CommandOutput');
     }
 
 }

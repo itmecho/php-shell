@@ -2,7 +2,10 @@
 
 namespace Neuron\Shell;
 
+use Neuron\Shell\Exceptions\CommandNotFoundException;
 use Neuron\Shell\Exceptions\DirectoryDoesNotExistException;
+use Neuron\Shell\Exceptions\FailedToExecuteCommandException;
+use Neuron\Shell\Resources\CommandOutput;
 
 class Command
 {
@@ -20,6 +23,9 @@ class Command
 
     public function __construct($cmd)
     {
+        if( ! is_executable($cmd))
+            throw new CommandNotFoundException($cmd);
+
         $this->cmd = $cmd;
         $this->cmdString = $cmd;
     }
@@ -103,4 +109,36 @@ class Command
         return $this;
     }
 
+    public function execute()
+    {
+        $descriptors = [
+            0 => array('pipe', 'r'),
+            1 => array('pipe', 'w'),
+            2 => array('pipe', 'w'),
+        ];
+
+        // Todo: Add environment variable support
+        $process = proc_open($this->cmdString, $descriptors, $pipes, $this->workingDirectory);
+
+        if( is_resource($process) ) {
+
+            fclose($pipes[0]);
+
+            $stdout = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
+
+            $stderr = stream_get_contents($pipes[2]);
+            fclose($pipes[2]);
+
+            $exitCode = proc_close($process);
+
+            return new CommandOutput($stdout, $stderr, $exitCode);
+
+        } else {
+
+            throw new FailedToExecuteCommandException($this->cmdString);
+
+        }
+
+    }
 }
