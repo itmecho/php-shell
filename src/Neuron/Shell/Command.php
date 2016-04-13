@@ -21,6 +21,8 @@ class Command
 
     protected $arguments = [];
 
+    protected $environmentVariables = [];
+
     public function __construct($cmd)
     {
         if( ! is_executable($cmd))
@@ -109,6 +111,18 @@ class Command
         return $this;
     }
 
+    public function addEnvironmentVariable($key, $value)
+    {
+        $this->environmentVariables[$key] = $value;
+
+        return $this;
+    }
+
+    public function getEnvironmentVariables()
+    {
+        return $this->environmentVariables;
+    }
+
     public function execute()
     {
         $descriptors = [
@@ -117,8 +131,7 @@ class Command
             2 => array('pipe', 'w'),
         ];
 
-        // Todo: Add environment variable support
-        $process = proc_open($this->cmdString, $descriptors, $pipes, $this->workingDirectory);
+        $process = proc_open($this->cmdString, $descriptors, $pipes, $this->workingDirectory, $this->environmentVariables);
 
         if( is_resource($process) ) {
 
@@ -141,4 +154,5 @@ class Command
         }
 
     }
+
 }

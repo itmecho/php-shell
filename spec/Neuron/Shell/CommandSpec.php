@@ -90,6 +90,16 @@ class CommandSpec extends ObjectBehavior
         $this->getCmdString()->shouldReturn('/bin/true -v \'test\' --config \'/test/config.json\'');
     }
 
+    function it_can_add_environment_variables_for_the_command()
+    {
+        $this->addEnvironmentVariable('key', 'value')->shouldReturn($this);
+        $this->addEnvironmentVariable('grapes', 'sweet')->shouldReturn($this);
+        $this->getEnvironmentVariables()->shouldReturn([
+            'key' => 'value',
+            'grapes' => 'sweet',
+        ]);
+    }
+
     function it_can_execute_a_command()
     {
         $this->execute()->shouldReturnAnInstanceOf('Neuron\Shell\Resources\CommandOutput');
