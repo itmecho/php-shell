@@ -13,7 +13,7 @@ class Command
 
     protected $cmdString;
 
-    protected $workingDirectory = '/tmp';
+    protected $workingDirectory = __DIR__;
 
     protected $shortFlags = [];
 

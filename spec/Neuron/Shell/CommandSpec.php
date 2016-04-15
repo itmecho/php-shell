@@ -29,9 +29,10 @@ class CommandSpec extends ObjectBehavior
 
     function it_can_set_a_working_directory_for_the_command()
     {
+        $defaultDir = str_replace('spec', 'src', __DIR__);
         $realDir = __DIR__;
 
-        $this->getWorkingDirectory()->shouldReturn('/tmp');
+        $this->getWorkingDirectory()->shouldReturn($defaultDir);
         $this->setWorkingDirectory($realDir)->shouldReturn($this);
         $this->getWorkingDirectory()->shouldReturn($realDir);
     }
