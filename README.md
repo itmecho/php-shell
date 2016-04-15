@@ -48,3 +48,8 @@ var_dump($output->stdoutContains('banana')); // bool(true)
 ## License
 
 PHP Shell is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+
+## Changelog
+
+### 1.0.0
+* Initial Release
