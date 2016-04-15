@@ -12,7 +12,7 @@
 
 ## License
 
-Laravel Elixir is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+PHP Shell is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
 ## Changelog
 
