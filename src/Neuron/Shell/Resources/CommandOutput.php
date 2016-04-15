@@ -49,7 +49,7 @@ class CommandOutput
 
     public function combinedOutputContains($searchString)
     {
-        return $this->stdoutContains($searchString) ? true : $this->stderrContains($searchString);
+        return $this->stdoutContains($searchString) || $this->stderrContains($searchString);
     }
 
 }
