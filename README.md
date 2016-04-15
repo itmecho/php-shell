@@ -34,6 +34,17 @@ $echo = new Neuron\Shell\Command('/bin/echo');
 $echo->addArgument('hi there!');
 ```
 
+#### Searching Output
+Check if the command was successful using the `wasSuccessful` method. Check if the output contains a certain string using the `stdoutContains` and `stderrContains` methods.
+```php
+$echo = new \Neuron\Shell\Command('/bin/echo');
+$echo->addArgument('fruit banana');
+$output = $echo->execute();
+var_dump($output->wasSuccessful()); // bool(true)
+var_dump($output->stdoutContains('apple')); // bool(false)
+var_dump($output->stdoutContains('banana')); // bool(true)
+```
+
 ## License
 
 PHP Shell is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
