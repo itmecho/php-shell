@@ -34,6 +34,14 @@ $echo = new Neuron\Shell\Command('/bin/echo');
 $echo->addArgument('hi there!');
 ```
 
+#### Piping through another command
+```php
+$cmd = new Neuron\Shell\Command('/usr/local/bin/my_command');
+$cmd2 = new Neuron\Shell\Command('/usr/local/bin/my_command2');
+$cmd->pipe($cmd2);
+echo $cmd->getCmdString(); // "/usr/local/bin/my_command | /usr/local/bin/my_command2"
+```
+
 #### Searching Output
 Check if the command was successful using the `wasSuccessful` method. Check if the output contains a certain string using the `stdoutContains` and `stderrContains` methods.
 ```php
@@ -50,6 +58,9 @@ var_dump($output->stdoutContains('banana')); // bool(true)
 PHP Shell is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
 ## Changelog
+
+### 1.1.0
+* Adding pipe functionality
 
 ### 1.0.0
 * Initial Release
