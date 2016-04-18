@@ -2,6 +2,7 @@
 
 namespace spec\Neuron\Shell;
 
+use Neuron\Shell\Command;
 use Neuron\Shell\Exceptions\CommandNotFoundException;
 use Neuron\Shell\Exceptions\DirectoryDoesNotExistException;
 use PhpSpec\ObjectBehavior;
@@ -99,6 +100,15 @@ class CommandSpec extends ObjectBehavior
             'key' => 'value',
             'grapes' => 'sweet',
         ]);
+    }
+
+    function it_can_pipe_commands_through_other_commands()
+    {
+        $cmd2 = new Command('/bin/false');
+        $this->getPipes()->shouldReturn([]);
+        $this->pipe($cmd2)->shouldReturn($this);
+        $this->getPipes()->shouldReturn(['/bin/false']);
+        $this->getCmdString()->shouldReturn('/bin/true | /bin/false');
     }
 
     function it_can_execute_a_command()

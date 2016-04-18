@@ -50,6 +50,11 @@ class Command
     protected $environmentVariables = [];
 
     /**
+     * @var array
+     */
+    protected $pipes = [];
+
+    /**
      * Command constructor
      *
      * @param $cmd
@@ -225,6 +230,27 @@ class Command
     }
 
     /**
+     * Pipes current command through another command
+     *
+     * @param Command $command
+     * @return $this
+     */
+    public function pipe(Command $command)
+    {
+        $this->pipes[] = $command->getCmdString();
+
+        $this->cmdString .= " | {$command->getCmdString()}";
+
+        return $this;
+    }
+
+
+    public function getPipes()
+    {
+        return $this->pipes;
+    }
+
+    /**
      * Executes the command and returns the OutputResource containing the commands output data
      *
      * @return CommandOutput
@@ -240,7 +266,7 @@ class Command
 
         $process = proc_open($this->cmdString, $descriptors, $pipes, $this->workingDirectory, $this->environmentVariables);
 
-        if( is_resource($process) ) {
+        if (is_resource($process)) {
 
             fclose($pipes[0]);
 
