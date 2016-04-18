@@ -59,6 +59,9 @@ PHP Shell is open-sourced software licensed under the [MIT license](http://opens
 
 ## Changelog
 
+### 1.1.1
+* Adding README info for pipe functionality
+
 ### 1.1.0
 * Adding pipe functionality
 
